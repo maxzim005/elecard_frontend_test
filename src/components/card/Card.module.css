@@ -1,0 +1,36 @@
+.img_wrap {
+    width: 125px;
+    height: 125px;
+    margin-bottom: 15px;
+}
+
+.org_icon {
+    border-radius: 30px;
+    width: 100%;
+    height: 100%;
+    /* object-fit: cover; */
+}
+
+.elem_text {
+    font-family: Tahoma;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 27px;
+
+}
+
+.element {
+    background: linear-gradient(108.28deg, #50afa3 6.82%, #a536a8 96.73%);
+    margin: 20px;
+    padding: 15px;
+    border-radius: 25px;
+    width: 20%;
+    height: max-content;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 230px;
+    text-align: center;
+    font-weight: 900;
+}
