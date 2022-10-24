@@ -7,6 +7,13 @@
   min-height: 900px;
 }
 
+.preloader{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 35%;
+}
+
 .cards {
   /* padding: 10px; */
   margin-top: 65px;

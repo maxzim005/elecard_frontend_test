@@ -4,6 +4,7 @@ import axios from 'axios';
 class FetchCards {
 
     cards = [];
+    isFetching = true;
 
     constructor(){
         makeAutoObservable(this)
@@ -15,9 +16,8 @@ class FetchCards {
                 for (let i=0; i < 59; i++) { //i < response.data.length
                     this.cards.push(response.data[i]);
                 }
-                // this.cards = [...response.data]
-
-                // console.log(this.cards);
+                // this.cards = [...response.data];
+                this.isFetching = false;
             })
             .catch(error => console.error(error));
         }
