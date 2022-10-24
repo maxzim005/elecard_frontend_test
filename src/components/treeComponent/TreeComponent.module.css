@@ -1,0 +1,16 @@
+.tree_component{
+    margin-left: 50px;
+}
+
+button img {
+    height: 35px;
+    width: 35px; 
+}
+
+.modal_close_btn {
+    position: relative;
+    bottom: 470px;
+    left: 10px;
+    height: 20px;
+    width: 30px;
+}

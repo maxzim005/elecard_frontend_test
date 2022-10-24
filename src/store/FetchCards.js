@@ -13,7 +13,7 @@ class FetchCards {
     fetchCards() {
         axios.get("http://contest.elecard.ru/frontend_data/catalog.json")
             .then((response) => {
-                for (let i=0; i < 59; i++) { //i < response.data.length
+                for (let i=0; i < 59; i++) { // response.data.length
                     this.cards.push(response.data[i]);
                 }
                 // this.cards = [...response.data];

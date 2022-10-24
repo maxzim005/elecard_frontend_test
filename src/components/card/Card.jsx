@@ -8,7 +8,7 @@ const Card = ({ card, id }) => {
 
     let correctDate = new Date(card.timestamp);
     let day, month;
-    if (correctDate.getDate() < 9) {
+    if (correctDate.getDate() <= 9) {
         day = '0' + correctDate.getDate();
     }
     else {
