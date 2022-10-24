@@ -14,9 +14,14 @@
   top: 35%;
 }
 
+.switch_between_cards_and_trees{
+	margin-top: 70px;
+	margin-bottom: 0;
+}
+
 .cards_view {
   /* padding: 10px; */
-  margin-top: 65px;
+  margin-top: 15px;
   width: 100%;
   display: flex;
   justify-content: space-between;

@@ -9,13 +9,14 @@ import Pagination from '@mui/material/Pagination';
 import preloader from './img/preloader.svg';
 import Tree from 'react-animated-tree';
 import TreeComponent from './components/treeComponent/TreeComponent';
+import Switch from './components/switch/Switch';
 
 const App = observer(() => {
 	const [cards, setCards] = useState([]);
 	// const [filteredCards, setFilteredCards] = useState([]);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [isFetching, setIsFetching] = useState(FetchCards.isFetching);
-
+	const [switchView, setSwitchView] = useState('cards');
 	// let filteredCards = cards.filter((card) => {
 	// 	let keys = Object.keys(localStorage);
 	// 	for (let key of keys) {
@@ -26,6 +27,10 @@ const App = observer(() => {
 	// 			return false;
 	// 	}
 	// });
+
+	// const getSwitchView = (switchView) => {
+	// 	setSwitchView(switchView);
+	// }
 
 	useEffect(() => {
 		FetchCards.fetchCards();
@@ -73,6 +78,7 @@ const App = observer(() => {
 		// }, 1000)
 	}, [FetchCards.isFetching])
 
+
 	const handlePageChange = (e, value) => {
 		setCurrentPage(value);
 	};
@@ -81,6 +87,9 @@ const App = observer(() => {
 		<div className='App'>
 			{isFetching ? <img src={preloader} alt='preloader' className='preloader' /> : null}
 			<Header />
+			{/* <button className='switch_between_cards_and_trees'>Переключение между карточками и деревом</button> */}
+			<Switch switchView={switchView} setSwitchView={setSwitchView} />
+			{ switchView == 'cards' ?
 			<div className='cards'>
 				<div className='cards_view'>
 					{cards.slice((currentPage - 1) * 12, currentPage * 12).map(card => <Card id={card.image} key={card.image} card={card} />)}
@@ -89,6 +98,10 @@ const App = observer(() => {
 					<Pagination count={Math.ceil(cards.length / 12)} onChange={handlePageChange} variant="outlined" />
 				</div>
 			</div>
+			: null
+			}
+
+			{ switchView == 'tree' ?
 			<div className='tree'>
 				<Tree content='Animals'>
 					{cards.map(card => card.category == 'animals' ? <TreeComponent content={card.image} img={'http://contest.elecard.ru/frontend_data/' + card.image} /> : null)}
@@ -116,6 +129,7 @@ const App = observer(() => {
 				</Tree>
 
 			</div>
+			: null }
 			{/* {cards.map(card => <Tree content={card.category} visible/>)} */}
 			{/* <Tree content="Apple" type="Fruit" open canHide visible/>	
 				<Tree content="Contents">
