@@ -6,9 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import s from './Switch.module.css';
 
-const Switch = ({switchView, setSwitchView}) => {
-
-    // const [value, setValue] = useState('cards');
+const Switch = ({ switchView, setSwitchView }) => {
 
     const handleChange = (e) => {
         setSwitchView(e.target.value);

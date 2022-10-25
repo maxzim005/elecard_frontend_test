@@ -1,6 +1,6 @@
 .img_wrap {
     width: 125px;
-    height: 125px;
+    height: 100%;
     margin-bottom: 15px;
 }
 
@@ -20,8 +20,17 @@
 
 }
 
+.image {
+    font-weight: 600;
+}
+
+.filesize_value {
+    font-weight: 600;
+    display: inline;
+}
+
 .element {
-    background: linear-gradient(108.28deg, #50afa3 6.82%, #a536a8 96.73%);
+    background: linear-gradient(108.28deg, #50afa3 6.82%, #50afa3 96.73%);
     margin: 20px;
     padding: 15px;
     border-radius: 25px;
@@ -36,13 +45,11 @@
 }
 
 .close_btn {
-    position: relative;
-    left: 100px;
-    bottom: 180px;
     width: 30px;
     height: 20px;
     text-decoration: none;
     background-color: black;
     color: white;
     border-radius: 8px;
+    margin-top: 10px;
 }

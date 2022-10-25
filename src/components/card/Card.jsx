@@ -1,8 +1,8 @@
 import { clear } from '@testing-library/user-event/dist/clear';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import s from './Card.module.css';
 
-const Card = ({ card, id }) => {
+const Card = ({ card}) => {
 
     let src_name = 'http://contest.elecard.ru/frontend_data/' + card.image;
     const cardElement = useRef();
@@ -38,8 +38,8 @@ const Card = ({ card, id }) => {
                 <img className={s.org_icon} src={src_name} alt='' />
             </div>
             <div className={s.category}>{card.category}</div>
-            <div className={s.category}>{card.image}</div>
-            <div className={s.filesize}>filesize: {card.filesize} KB</div>
+            <div className={s.image}>{card.image}</div>
+            <div className={s.filesize}>filesize: <div className={s.filesize_value}>{card.filesize} KB</div></div>
             <div className={s.time}>{cardDate}</div>
             <button className={s.close_btn} onClick={handleCloseClick}>X</button>
         </div>

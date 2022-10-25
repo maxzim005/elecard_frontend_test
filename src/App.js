@@ -14,60 +14,21 @@ import SortBy from './components/sortby/SortBy';
 
 const App = observer(() => {
 	const [cards, setCards] = useState([]);
-	// const [filteredCards, setFilteredCards] = useState([]);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [isFetching, setIsFetching] = useState(FetchCards.isFetching);
 	const [switchView, setSwitchView] = useState('cards');
 	const [sortBy, setSortBy] = useState('none');
 
-	// const getSwitchView = (switchView) => {
-	// 	setSwitchView(switchView);
-	// }
-
 	useEffect(() => {
 		FetchCards.fetchCards();
 	}, [])
 
-	useEffect(() => { //timeout for testing
-		// setTimeout(() => {
-		// console.log('here 1');
-		// let keys = Object.keys(localStorage);
-		// console.log(keys);
-		// console.log(keys.length);
-		// if (!keys.length) {
-		// 	setCards(FetchCards.cards)
-		// 	console.log('here 2');
-		// }
-		// else {
-		// 	console.log('here 3');
-		// 	let initialArray = [];
-		// 	let smth = [...FetchCards.cards];
-		// 	smth.filter((card, i) => {
-		// 		console.log('current forEach: '+i);
-		// 		for (let key of keys) {
-		// 			// console.log(`${key}: ${localStorage.getItem(key)}`);
-		// 			// console.log(card.image + ' ' + localStorage.getItem(key));
-		// 			if (card.image != localStorage.getItem(key)) {
-		// 				return true
-		// 				// console.log(initialArray);
-		// 			}
-		// 			else {
-		// 				console.log('ЗАЕБАЛ');
-		// 			}
-		// 		}
-		// 	});
-		// 	console.log('here 4');
-		// 	setCards(initialArray);
-		// }
-		// setCards(s);
+	useEffect(() => {
 		setCards(FetchCards.cards.sort(chooseSort));
-		// }, 1000)
-	}, [FetchCards.cards, sortBy]) //, localStorage.length
+	}, [FetchCards.cards, sortBy])
 
 	useEffect(() => {
-		// setTimeout(() => {
 		setIsFetching(FetchCards.isFetching);
-		// }, 1000)
 	}, [FetchCards.isFetching])
 
 
@@ -77,27 +38,27 @@ const App = observer(() => {
 
 	function chooseSort(firstElem, secondElem) {
 		switch (sortBy) {
-			case 'none' :
+			case 'none':
 				return 0;
-			break;
-			case 'sort_category' :
+				break;
+			case 'sort_category':
 				return firstElem.category.localeCompare(secondElem.category);
-			break;
-			case 'sort_date' :
+				break;
+			case 'sort_date':
 				return firstElem.timestamp - secondElem.timestamp;
-			break;
-			case 'sort_name' :
+				break;
+			case 'sort_name':
 				let str1 = String(firstElem.image);
 				let index_str1 = str1.lastIndexOf('/');
 				let str2 = String(secondElem.image);
 				let index_str2 = str2.lastIndexOf('/');
 				return str1.slice(index_str1).localeCompare(str2.slice(index_str2));
-			break;
-			case 'sort_filesize' :
+				break;
+			case 'sort_filesize':
 				return firstElem.filesize - secondElem.filesize;
-			break;
+				break;
 		}
-	  }
+	}
 
 	return (
 		<div className='App'>
@@ -107,52 +68,25 @@ const App = observer(() => {
 				<Switch switchView={switchView} setSwitchView={setSwitchView} />
 				<SortBy sortBy={sortBy} setSortBy={setSortBy} />
 			</div>
-			{ switchView == 'cards' ?
-			<div className='cards'>
-				<div className='cards_view'>
-					{cards.slice((currentPage - 1) * 12, currentPage * 12).map(card => <Card id={card.image} key={card.image} card={card} />)}
+			{switchView == 'cards' ?
+				<div className='cards'>
+					<div className='cards_view'>
+						{cards.slice((currentPage - 1) * 12, currentPage * 12).map(card => <Card key={card.image} card={card} />)}
+					</div>
+					<div className='pagination'>
+						<Pagination count={Math.ceil(cards.length / 12)} onChange={handlePageChange} variant="outlined" />
+					</div>
 				</div>
-				<div className='pagination'>
-					<Pagination count={Math.ceil(cards.length / 12)} onChange={handlePageChange} variant="outlined" />
-				</div>
-			</div>
-			: null
+				: null
 			}
 
-			{ switchView == 'tree' ?
-			<div className='tree'>
-				<Tree content='Animals'>
-					{cards.map(card => card.category == 'animals' ? <TreeComponent content={card.image} img={'http://contest.elecard.ru/frontend_data/' + card.image} /> : null)}
-				</Tree>
-				<Tree content='Business'>
-					{cards.map(card => card.category == 'business' ? <Tree content={card.img} visible /> : null)}
-				</Tree>
-				<Tree content='Food'>
-					{cards.map(card => card.category == 'food' ? <Tree content={card.img} visible /> : null)}
-				</Tree>
-				<Tree content='Health'>
-					{cards.map(card => card.category == 'health' ? <Tree content={card.img} visible /> : null)}
-				</Tree>
-				<Tree content='Places'>
-					{cards.map(card => card.category == 'places' ? <Tree content={card.img} visible /> : null)}
-				</Tree>
-				<Tree content='Science'>
-					{cards.map(card => card.category == 'science' ? <Tree content={card.img} visible /> : null)}
-				</Tree>
-				<Tree content='Vehicle'>
-					{cards.map(card => card.category == 'vehicle' ? <Tree content={card.img} visible /> : null)}
-				</Tree>
-				<Tree content='Winter'>
-					{cards.map(card => card.category == 'winter' ? <Tree content={card.img} visible /> : null)}
-				</Tree>
-
-			</div>
-			: null }
-			{/* {cards.map(card => <Tree content={card.category} visible/>)} */}
-			{/* <Tree content="Apple" type="Fruit" open canHide visible/>	
-				<Tree content="Contents">
-				<Tree content="Contents"></Tree>
-				</Tree> */}
+			{switchView == 'tree' ?
+				<div className='tree'>
+					{
+						FetchCards.categories.map((category) => true ? <Tree key={category} content={category}>{cards.map(card => card.category == (category.toLowerCase()) ? <TreeComponent key={card.image} content={card.image} img={'http://contest.elecard.ru/frontend_data/' + card.image} /> : null)}</Tree> : null)
+					}
+				</div>
+				: null}
 			<Footer />
 		</div>
 	);

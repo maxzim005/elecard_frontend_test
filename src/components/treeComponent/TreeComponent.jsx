@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Tree from 'react-animated-tree';
 import s from './TreeComponent.module.css';
 import Modal from 'react-modal';
@@ -6,14 +6,14 @@ import Modal from 'react-modal';
 Modal.setAppElement('#root');
 const customStyles = {
     content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
     },
-  };
+};
 
 const TreeComponent = ({ content, img }) => {
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -29,10 +29,10 @@ const TreeComponent = ({ content, img }) => {
     return (
         <div className={s.tree_component}>
             <Tree content={content} />
-            
+
             <button onClick={openModal}><img src={img} alt="" /></button>
             <div className={s.modal}>
-                
+
                 <Modal
                     isOpen={modalIsOpen}
                     onRequestClose={closeModal}
