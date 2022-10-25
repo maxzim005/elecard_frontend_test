@@ -10,6 +10,7 @@ import preloader from './img/preloader.svg';
 import Tree from 'react-animated-tree';
 import TreeComponent from './components/treeComponent/TreeComponent';
 import Switch from './components/switch/Switch';
+import SortBy from './components/sortby/SortBy';
 
 const App = observer(() => {
 	const [cards, setCards] = useState([]);
@@ -17,16 +18,7 @@ const App = observer(() => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [isFetching, setIsFetching] = useState(FetchCards.isFetching);
 	const [switchView, setSwitchView] = useState('cards');
-	// let filteredCards = cards.filter((card) => {
-	// 	let keys = Object.keys(localStorage);
-	// 	for (let key of keys) {
-	// 		// console.log(`${key}: ${localStorage.getItem(key)}`);
-	// 		if (card.image == localStorage.getItem(key))
-	// 			return true;
-	// 		else
-	// 			return false;
-	// 	}
-	// });
+	const [sortBy, setSortBy] = useState('none');
 
 	// const getSwitchView = (switchView) => {
 	// 	setSwitchView(switchView);
@@ -68,9 +60,9 @@ const App = observer(() => {
 		// 	setCards(initialArray);
 		// }
 		// setCards(s);
-		setCards(FetchCards.cards);
+		setCards(FetchCards.cards.sort(chooseSort));
 		// }, 1000)
-	}, [FetchCards.cards]) //, localStorage.length
+	}, [FetchCards.cards, sortBy]) //, localStorage.length
 
 	useEffect(() => {
 		// setTimeout(() => {
@@ -83,12 +75,38 @@ const App = observer(() => {
 		setCurrentPage(value);
 	};
 
+	function chooseSort(firstElem, secondElem) {
+		switch (sortBy) {
+			case 'none' :
+				return 0;
+			break;
+			case 'sort_category' :
+				return firstElem.category.localeCompare(secondElem.category);
+			break;
+			case 'sort_date' :
+				return firstElem.timestamp - secondElem.timestamp;
+			break;
+			case 'sort_name' :
+				let str1 = String(firstElem.image);
+				let index_str1 = str1.lastIndexOf('/');
+				let str2 = String(secondElem.image);
+				let index_str2 = str2.lastIndexOf('/');
+				return str1.slice(index_str1).localeCompare(str2.slice(index_str2));
+			break;
+			case 'sort_filesize' :
+				return firstElem.filesize - secondElem.filesize;
+			break;
+		}
+	  }
+
 	return (
 		<div className='App'>
 			{isFetching ? <img src={preloader} alt='preloader' className='preloader' /> : null}
 			<Header />
-			{/* <button className='switch_between_cards_and_trees'>Переключение между карточками и деревом</button> */}
-			<Switch switchView={switchView} setSwitchView={setSwitchView} />
+			<div className='switch_and_sort'>
+				<Switch switchView={switchView} setSwitchView={setSwitchView} />
+				<SortBy sortBy={sortBy} setSortBy={setSortBy} />
+			</div>
 			{ switchView == 'cards' ?
 			<div className='cards'>
 				<div className='cards_view'>

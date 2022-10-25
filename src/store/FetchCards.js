@@ -6,21 +6,22 @@ class FetchCards {
     cards = [];
     isFetching = true;
 
-    constructor(){
+    constructor() {
         makeAutoObservable(this)
     }
 
     fetchCards() {
         axios.get("http://contest.elecard.ru/frontend_data/catalog.json")
             .then((response) => {
-                for (let i=0; i < 12; i++) { // response.data.length
-                    this.cards.push(response.data[i]);
+                for (let i = 0; i < response.data.length; i+= 3) { // response.data.length
+                    if (!(response.data[i].image in localStorage)) {
+                        this.cards.push(response.data[i]);
+                    }
                 }
-                // this.cards = [...response.data];
                 this.isFetching = false;
             })
             .catch(error => console.error(error));
-        }
+    }
 }
 
 export default new FetchCards()
