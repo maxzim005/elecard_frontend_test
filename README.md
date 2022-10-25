@@ -10,4 +10,4 @@
 # Для запуска 
 cd elecard \
 npm i \
-npm start \
+npm start 
