@@ -7,7 +7,7 @@
 - react-animated-tree,
 - Bootstrap.
 
-# Для запуска
-cd elecard
-npm i
-npm start
+# Для запуска 
+cd elecard \
+npm i \
+npm start \
